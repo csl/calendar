@@ -26,16 +26,16 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SimpleCalendarViewActivity extends Activity implements OnClickListener
+public class MCalendar extends Activity implements OnClickListener
 	{
-		private static final String tag = "SimpleCalendarViewActivity";
+		private static final String tag = "MCalendar";
 
 		private ImageView calendarToJournalButton;
-		private Button selectedDayMonthYearButton;
+		//private Button selectedDayMonthYearButton;
 		private Button currentMonth;
 		private ImageView prevMonth;
 		private ImageView nextMonth;
-		private GridView calendarView;
+		//private GridView calendarView;
 		private GridCellAdapter adapter;
 		private Calendar _calendar;
 		private int month, year;
@@ -47,15 +47,16 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 		public void onCreate(Bundle savedInstanceState)
 			{
 				super.onCreate(savedInstanceState);
-				setContentView(R.layout.simple_calendar_view);
+				setContentView(R.layout.month_view);
 
 				_calendar = Calendar.getInstance(Locale.getDefault());
 				month = _calendar.get(Calendar.MONTH) + 1;
 				year = _calendar.get(Calendar.YEAR);
+				
 				Log.d(tag, "Calendar Instance:= " + "Month: " + month + " " + "Year: " + year);
 
-				selectedDayMonthYearButton = (Button) this.findViewById(R.id.selectedDayMonthYear);
-				selectedDayMonthYearButton.setText("Selected: ");
+				//selectedDayMonthYearButton = (Button) this.findViewById(R.id.selectedDayMonthYear);
+				//selectedDayMonthYearButton.setText("Selected: ");
 
 				prevMonth = (ImageView) this.findViewById(R.id.prevMonth);
 				prevMonth.setOnClickListener(this);
@@ -66,12 +67,12 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 				nextMonth = (ImageView) this.findViewById(R.id.nextMonth);
 				nextMonth.setOnClickListener(this);
 
-				calendarView = (GridView) this.findViewById(R.id.calendar);
+				//calendarView = (GridView) this.findViewById(R.id.calendar);
 
 				// Initialised
 				adapter = new GridCellAdapter(getApplicationContext(), R.id.calendar_day_gridcell, month, year);
 				adapter.notifyDataSetChanged();
-				calendarView.setAdapter(adapter);
+				//calendarView.setAdapter(adapter);
 			}
 
 		/**
@@ -85,12 +86,13 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 				_calendar.set(year, month - 1, _calendar.get(Calendar.DAY_OF_MONTH));
 				currentMonth.setText(dateFormatter.format(dateTemplate, _calendar.getTime()));
 				adapter.notifyDataSetChanged();
-				calendarView.setAdapter(adapter);
+				//calendarView.setAdapter(adapter);
 			}
 
 		@Override
 		public void onClick(View v)
 			{
+			
 				if (v == prevMonth)
 					{
 						if (month <= 1)
@@ -389,7 +391,7 @@ public class SimpleCalendarViewActivity extends Activity implements OnClickListe
 				public void onClick(View view)
 					{
 						String date_month_year = (String) view.getTag();
-						selectedDayMonthYearButton.setText("Selected: " + date_month_year);
+						//selectedDayMonthYearButton.setText("Selected: " + date_month_year);
 
 						try
 							{
