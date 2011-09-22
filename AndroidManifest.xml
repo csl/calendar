@@ -12,9 +12,8 @@
             </intent-filter>
         </activity>
 
-    </application>
-    
     <activity android:name="MCalendar"></activity>
-
-
+    <activity android:name="DCalendar"></activity>
+    
+    </application>
 </manifest> 

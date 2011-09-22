@@ -12,6 +12,7 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -42,6 +43,8 @@ public class CCalendar extends Activity implements OnClickListener
 		private final DateFormat dateFormatter = new DateFormat();
 		private static final String dateTemplate = "MMMM yyyy";
 
+		private Button Setting;
+
 		/** Called when the activity is first created. */
 		@Override
 		public void onCreate(Bundle savedInstanceState)
@@ -68,7 +71,19 @@ public class CCalendar extends Activity implements OnClickListener
 
 				calendarView = (GridView) this.findViewById(R.id.calendar);
 
-				// Initialised
+				Setting = (Button) this.findViewById(R.id.Setting);
+				
+				Setting.setOnClickListener(new Button.OnClickListener()
+		        {
+		         public void onClick(View v)
+		         {
+			         Intent intent = new Intent();
+			         intent.setClass(CCalendar.this, DCalendar.class);
+	
+			         startActivity(intent);
+		         }
+		        });				
+
 				adapter = new GridCellAdapter(getApplicationContext(), R.id.calendar_day_gridcell, month, year);
 				adapter.notifyDataSetChanged();
 				calendarView.setAdapter(adapter);
@@ -153,7 +168,7 @@ public class CCalendar extends Activity implements OnClickListener
 
 				// Days in Current Month
 				public GridCellAdapter(Context context, int textViewResourceId, int month, int year)
-					{
+				{
 						super();
 						this._context = context;
 						this.list = new ArrayList<String>();
@@ -161,9 +176,11 @@ public class CCalendar extends Activity implements OnClickListener
 						this.year = year;
 
 						Log.d(tag, "==> Passed in Date FOR Month: " + month + " " + "Year: " + year);
+						
 						Calendar calendar = Calendar.getInstance();
 						setCurrentDayOfMonth(calendar.get(Calendar.DAY_OF_MONTH));
 						setCurrentWeekDay(calendar.get(Calendar.DAY_OF_WEEK));
+						
 						Log.d(tag, "New Calendar:= " + calendar.getTime().toString());
 						Log.d(tag, "CurrentDayOfWeek :" + getCurrentWeekDay());
 						Log.d(tag, "CurrentDayOfMonth :" + getCurrentDayOfMonth());
@@ -173,32 +190,33 @@ public class CCalendar extends Activity implements OnClickListener
 
 						// Find Number of Events
 						eventsPerMonthMap = findNumberOfEventsPerMonth(year, month);
-					}
+				}
+				
 				private String getMonthAsString(int i)
-					{
+				{
 						return months[i];
-					}
+				}
 
 				private String getWeekDayAsString(int i)
-					{
+				{
 						return weekdays[i];
-					}
+				}
 
 				private int getNumberOfDaysOfMonth(int i)
-					{
+				{
 						return daysOfMonth[i];
-					}
+				}
 
 				public String getItem(int position)
-					{
+				{
 						return list.get(position);
-					}
+				}
 
 				@Override
 				public int getCount()
-					{
+				{
 						return list.size();
-					}
+				}
 
 				/**
 				 * Prints Month
@@ -207,8 +225,9 @@ public class CCalendar extends Activity implements OnClickListener
 				 * @param yy
 				 */
 				private void printMonth(int mm, int yy)
-					{
+				{
 						Log.d(tag, "==> printMonth: mm: " + mm + " " + "yy: " + yy);
+						
 						// The number of days to leave blank at
 						// the start of this month.
 						int trailingSpaces = 0;
@@ -230,32 +249,32 @@ public class CCalendar extends Activity implements OnClickListener
 						Log.d(tag, "Gregorian Calendar:= " + cal.getTime().toString());
 
 						if (currentMonth == 11)
-							{
+						{
 								prevMonth = currentMonth - 1;
 								daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
 								nextMonth = 0;
 								prevYear = yy;
 								nextYear = yy + 1;
 								Log.d(tag, "*->PrevYear: " + prevYear + " PrevMonth:" + prevMonth + " NextMonth: " + nextMonth + " NextYear: " + nextYear);
-							}
+						}
 						else if (currentMonth == 0)
-							{
+						{
 								prevMonth = 11;
 								prevYear = yy - 1;
 								nextYear = yy;
 								daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
 								nextMonth = 1;
 								Log.d(tag, "**--> PrevYear: " + prevYear + " PrevMonth:" + prevMonth + " NextMonth: " + nextMonth + " NextYear: " + nextYear);
-							}
+						}
 						else
-							{
+						{
 								prevMonth = currentMonth - 1;
 								nextMonth = currentMonth + 1;
 								nextYear = yy;
 								prevYear = yy;
 								daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
 								Log.d(tag, "***---> PrevYear: " + prevYear + " PrevMonth:" + prevMonth + " NextMonth: " + nextMonth + " NextYear: " + nextYear);
-							}
+						}
 
 						// Compute how much to leave before before the first day of the
 						// month.
@@ -268,37 +287,37 @@ public class CCalendar extends Activity implements OnClickListener
 						Log.d(tag, "No. of Days in Previous Month: " + daysInPrevMonth);
 
 						if (cal.isLeapYear(cal.get(Calendar.YEAR)) && mm == 1)
-							{
+						{
 								++daysInMonth;
-							}
+						}
 
 						// Trailing Month days
 						for (int i = 0; i < trailingSpaces; i++)
-							{
+						{
 								Log.d(tag, "PREV MONTH:= " + prevMonth + " => " + getMonthAsString(prevMonth) + " " + String.valueOf((daysInPrevMonth - trailingSpaces + DAY_OFFSET) + i));
 								list.add(String.valueOf((daysInPrevMonth - trailingSpaces + DAY_OFFSET) + i) + "-GREY" + "-" + getMonthAsString(prevMonth) + "-" + prevYear);
-							}
+						}
 
 						// Current Month Days
 						for (int i = 1; i <= daysInMonth; i++)
-							{
+						{
 								Log.d(currentMonthName, String.valueOf(i) + " " + getMonthAsString(currentMonth) + " " + yy);
 								if (i == getCurrentDayOfMonth())
-									{
+								{
 										list.add(String.valueOf(i) + "-BLUE" + "-" + getMonthAsString(currentMonth) + "-" + yy);
-									}
+								}
 								else
-									{
+								{
 										list.add(String.valueOf(i) + "-WHITE" + "-" + getMonthAsString(currentMonth) + "-" + yy);
-									}
-							}
+								}
+						}
 
 						// Leading Month days
 						for (int i = 0; i < list.size() % 7; i++)
-							{
+						{
 								Log.d(tag, "NEXT MONTH:= " + getMonthAsString(nextMonth));
 								list.add(String.valueOf(i + 1) + "-GREY" + "-" + getMonthAsString(nextMonth) + "-" + nextYear);
-							}
+						}
 					}
 
 				/**
@@ -338,15 +357,16 @@ public class CCalendar extends Activity implements OnClickListener
 
 				@Override
 				public View getView(int position, View convertView, ViewGroup parent)
-					{
+				{
 						View row = convertView;
 						if (row == null)
-							{
+						{
 								LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 								row = inflater.inflate(R.layout.calendar_day_gridcell, parent, false);
-							}
+						}
 
 						// Get a reference to the Day gridcell
+						
 						gridcell = (Button) row.findViewById(R.id.calendar_day_gridcell);
 						gridcell.setOnClickListener(this);
 
@@ -357,6 +377,7 @@ public class CCalendar extends Activity implements OnClickListener
 						String theday = day_color[0];
 						String themonth = day_color[2];
 						String theyear = day_color[3];
+						
 						if ((!eventsPerMonthMap.isEmpty()) && (eventsPerMonthMap != null))
 							{
 								if (eventsPerMonthMap.containsKey(theday))
@@ -385,41 +406,45 @@ public class CCalendar extends Activity implements OnClickListener
 								gridcell.setTextColor(getResources().getColor(R.color.static_text_color));
 							}
 						return row;
-					}
+				}
+				
 				@Override
 				public void onClick(View view)
-					{
+				{
 						String date_month_year = (String) view.getTag();
 						//selectedDayMonthYearButton.setText("Selected: " + date_month_year);
 
 						try
-							{
+						{
 								Date parsedDate = dateFormatter.parse(date_month_year);
 								Log.d(tag, "Parsed Date: " + parsedDate.toString());
 
-							}
+						}
 						catch (ParseException e)
-							{
+						{
 								e.printStackTrace();
-							}
-					}
+						}
+				}
 
 				public int getCurrentDayOfMonth()
-					{
+				{
 						return currentDayOfMonth;
-					}
+				}
 
 				private void setCurrentDayOfMonth(int currentDayOfMonth)
-					{
+				{
 						this.currentDayOfMonth = currentDayOfMonth;
-					}
+				}
+				
 				public void setCurrentWeekDay(int currentWeekDay)
-					{
+				{
 						this.currentWeekDay = currentWeekDay;
-					}
+				
+				}
+				
 				public int getCurrentWeekDay()
-					{
+				{
 						return currentWeekDay;
-					}
+				}
 			}
 	}
