@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -43,6 +44,8 @@ public class DCalendar extends Activity implements OnClickListener
 
 		//private Button selectedDayMonthYearButton;
 		private Button currentMonth;
+		private Button Setting;
+
 		private ImageView prevMonth;
 		private ImageView nextMonth;
 		//private GridView calendarView;
@@ -83,6 +86,20 @@ public class DCalendar extends Activity implements OnClickListener
 				nextMonth = (ImageView) this.findViewById(R.id.nextMonth);
 				nextMonth.setOnClickListener(this);
 
+				Setting = (Button) this.findViewById(R.id.Setting);
+				
+				Setting.setOnClickListener(new Button.OnClickListener()
+		        {
+		         public void onClick(View v)
+		         {
+		        	  DCalendar.this.finish();
+			         Intent intent = new Intent();
+			         intent.setClass(DCalendar.this, configure.class);
+	
+			         startActivity(intent);
+		         }
+		        });				
+				
 				//calendarView = (GridView) this.findViewById(R.id.calendar);
 
 				// Initialised

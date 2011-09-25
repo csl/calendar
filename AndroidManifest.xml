@@ -14,6 +14,7 @@
 
     <activity android:name="MCalendar"></activity>
     <activity android:name="DCalendar"></activity>
+    <activity android:name="configure"></activity>
     
     </application>
 </manifest> 

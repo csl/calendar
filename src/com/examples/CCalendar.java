@@ -28,7 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CCalendar extends Activity implements OnClickListener
-	{
+{
 		private static final String tag = "Calendar";
 
 		private ImageView calendarToJournalButton;
@@ -48,7 +48,7 @@ public class CCalendar extends Activity implements OnClickListener
 		/** Called when the activity is first created. */
 		@Override
 		public void onCreate(Bundle savedInstanceState)
-			{
+		{
 				super.onCreate(savedInstanceState);
 				setContentView(R.layout.calendar_view);
 
@@ -77,8 +77,9 @@ public class CCalendar extends Activity implements OnClickListener
 		        {
 		         public void onClick(View v)
 		         {
+		        	  CCalendar.this.finish();
 			         Intent intent = new Intent();
-			         intent.setClass(CCalendar.this, DCalendar.class);
+			         intent.setClass(CCalendar.this, configure.class);
 	
 			         startActivity(intent);
 		         }
@@ -87,7 +88,7 @@ public class CCalendar extends Activity implements OnClickListener
 				adapter = new GridCellAdapter(getApplicationContext(), R.id.calendar_day_gridcell, month, year);
 				adapter.notifyDataSetChanged();
 				calendarView.setAdapter(adapter);
-			}
+		}
 
 		/**
 		 * 
@@ -105,7 +106,7 @@ public class CCalendar extends Activity implements OnClickListener
 
 		@Override
 		public void onClick(View v)
-			{
+		{
 			
 				if (v == prevMonth)
 					{
@@ -136,7 +137,7 @@ public class CCalendar extends Activity implements OnClickListener
 						setGridCellAdapterToDate(month, year);
 					}
 
-			}
+		}
 
 		@Override
 		public void onDestroy()
@@ -331,7 +332,7 @@ public class CCalendar extends Activity implements OnClickListener
 				 * @return
 				 */
 				private HashMap findNumberOfEventsPerMonth(int year, int month)
-					{
+				{
 						HashMap map = new HashMap<String, Integer>();
 						// DateFormat dateFormatter2 = new DateFormat();
 						//						
@@ -347,13 +348,13 @@ public class CCalendar extends Activity implements OnClickListener
 						// map.put(day, 1);
 						// }
 						return map;
-					}
+				}
 
 				@Override
 				public long getItemId(int position)
-					{
+				{
 						return position;
-					}
+				}
 
 				@Override
 				public View getView(int position, View convertView, ViewGroup parent)

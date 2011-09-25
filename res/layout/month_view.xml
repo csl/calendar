@@ -50,16 +50,37 @@
             android:orientation="horizontal" android:layout_width="fill_parent"
             android:layout_height="fill_parent">
 	<Button
-			android:id="@+id/pre"
-			android:text="pre"
+			android:id="@+id/dairy"
+			android:text="日記"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 	</Button>
 	
 	<Button
-			android:id="@+id/next"
-			android:text="next"
+			android:id="@+id/amount"
+			android:text="記帳"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+	</Button>
+	<Button
+			android:id="@+id/event"
+			android:text="待辦"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">			
+	</Button>
+	<Button
+			android:id="@+id/Monththing"
+			android:text="月事"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+	</Button>
+	<Button
+			android:id="@+id/Setting"
+			android:text="設定"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
